@@ -2,10 +2,10 @@
 
 /* Controllers */
 
-angular.module('angular-todo.controllers', []).
-  controller('MyCtrl1', [function() {
+var todoControllers = angular.module('todoControllers', []);
 
-  }])
-  .controller('MyCtrl2', [function() {
-
-  }]);
+todoControllers.controller('TodoListCtrl', ['$scope', '$http', function ($scope, $http) {
+    $http.get('data/todos.json').success(function(data) {
+        $scope.todos = data;
+    });
+}]);
