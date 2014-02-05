@@ -9,3 +9,8 @@ todoControllers.controller('TodoListCtrl', ['$scope', '$http', function ($scope,
         $scope.todos = data;
     });
 }]);
+
+todoControllers.controller('TodoDetailCtrl', ['$scope', '$http', function ($scope, $http) {
+
+}]);
+

@@ -2,45 +2,13 @@
 <html lang="en" ng-app="angular-todo">
 <head>
     <meta charset="utf-8">
-    <title>My AngularJS App</title>
+    <title>Angular Todo List</title>
     <link rel="stylesheet" href="css/app.css"/>
     <link rel="stylesheet" href="css/bootstrap.css"/>
 </head>
-<body ng-controller="TodoListCtrl">
+<body>
 
 <div ng-view></div>
-<br/>
-<div class="container-fluid">
-    <div class="form-group">
-        <label for="todoFilter">Filter:</label>
-        <input ng-model="query" type="text" class="form-control" id="todoFilter" placeholder="Filter eingeben"/>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Beschreibung</th>
-                <th>Deadline</th>
-                <th>Erledigt</th>
-                <th>Wer</th>
-                <th>Kommentar</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <tr ng-repeat="todo in todos | filter:query">
-                <td>{{ todo.description }}</td>
-                <td>{{ todo.deadline }}</td>
-                <td>{{ todo.done }}</td>
-                <td>{{ todo.assignee }}</td>
-                <td>{{ todo.comment }}</td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-</div>
 
 <script src="lib/angular/angular.js"></script>
 <script src="lib/angular/angular-route.js"></script>
