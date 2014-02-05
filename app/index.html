@@ -9,8 +9,13 @@
 <body ng-controller="TodoListCtrl">
 
 <div ng-view></div>
-
+<br/>
 <div class="container-fluid">
+    <div class="form-group">
+        <label for="todoFilter">Filter:</label>
+        <input ng-model="query" type="text" class="form-control" id="todoFilter" placeholder="Filter eingeben"/>
+    </div>
+
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
@@ -24,7 +29,7 @@
             </thead>
             <tbody>
 
-            <tr ng-repeat="todo in todos">
+            <tr ng-repeat="todo in todos | filter:query">
                 <td>{{ todo.description }}</td>
                 <td>{{ todo.deadline }}</td>
                 <td>{{ todo.done }}</td>
