@@ -11,32 +11,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import ch.daniel.todobackend.rest.domain.Todo;
+import ch.daniel.todobackend.dao.TodoDao;
+import ch.daniel.todobackend.domain.Todo;
 
 @Path("todo")
 public class TodoResource {
 	
-	
+	private TodoDao todoDao = new TodoDao();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() throws IOException {
-		List<Todo> todos = getTodos();
-		
+		List<Todo> todos = todoDao.get();
 		return Response.status(200).entity(todos).build();
-	}
-
-	private List<Todo> getTodos() {
-		List<Todo> todos = new LinkedList<Todo>();
-		for(int i = 0; i < 5; i++) {
-			Todo todo = new Todo();
-			todo.setDescription("my description " + i);
-			todo.setDeadline(Calendar.getInstance());
-			todo.setDone(false);
-			todo.setAssignee(i % 2 == 0 ? "Dani" : "Nadja");
-			todo.setComment("my comment " + i);
-			todos.add(todo);
-		}
-		return todos;
 	}
 }
