@@ -7,7 +7,8 @@ angular.module('angular-todo', [
         'angular-todo.services',
         'angular-todo.directives',
         'todoControllers',
-        'angularTodoServices'
+        'angularTodoServices',
+        'ui.bootstrap'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/overview.html', controller: 'TodoListCtrl'});

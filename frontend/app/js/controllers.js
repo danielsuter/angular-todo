@@ -8,12 +8,13 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
     $scope.todos = Todo.query();
 }]);
 
-todoControllers.controller('TodoDetailCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $scope.todo = {};
+todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {
+    $scope.todo = new Todo();
     $scope.todo.done = false;
 
     $scope.addTodo = function() {
-        console.log($scope.todo);
+        $scope.todo.$save();
+        $location.path('/');
     };
 
     $scope.cancel = function() {
@@ -24,5 +25,24 @@ todoControllers.controller('TodoDetailCtrl', ['$scope', '$http', '$location', fu
     $scope.setDone = function(isDone) {
         $scope.todo.done = isDone;
     };
+
+
+    // Date picker
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate', 'dd.MM.yyyy'];
+    $scope.format = $scope.formats[3];
+
+    $scope.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+    };
 }]);
+
+
 

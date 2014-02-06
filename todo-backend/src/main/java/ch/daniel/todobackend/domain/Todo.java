@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 public class Todo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	private String description;
 	@Temporal(TemporalType.DATE)
@@ -62,4 +62,11 @@ public class Todo {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "Todo [id=" + id + ", description=" + description
+				+ ", deadline=" + deadline + ", isDone=" + isDone
+				+ ", assignee=" + assignee + ", comment=" + comment + "]";
+	}
+	
 }
