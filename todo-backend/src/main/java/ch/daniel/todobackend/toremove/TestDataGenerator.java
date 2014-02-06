@@ -13,7 +13,7 @@ public class TestDataGenerator {
 			Todo todo = new Todo();
 			todo.setDescription("my description " + i);
 			todo.setDeadline(Calendar.getInstance());
-			todo.setDone(false);
+			todo.setDone(i % 2 == 0 ? true : false);
 			todo.setAssignee(i % 2 == 0 ? "Dani" : "Nadja");
 			todo.setComment("my comment " + i);
 			todos.add(todo);
