@@ -20,9 +20,13 @@ public class StartupListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent contextEvent) {
-		List<Todo> todos = new TestDataGenerator().createTodos();
 		EntityManager entityManager = EntityManagerUtil.get();
 		entityManager.getTransaction().begin();
+		System.out.println("Removing all existing data");
+		entityManager.createQuery("DELETE FROM Todo").executeUpdate();
+		
+		System.out.println("Creating new sample data");
+		List<Todo> todos = new TestDataGenerator().createTodos();
 		for (Todo todo : todos) {
 			entityManager.persist(todo);
 		}

@@ -23,7 +23,7 @@
 
             <tr ng-repeat="todo in todos | filter:query">
                 <td>{{ todo.description }}</td>
-                <td>{{ todo.deadline }}</td>
+                <td>{{ todo.deadline | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ todo.done }}</td>
                 <td>{{ todo.assignee }}</td>
                 <td>{{ todo.comment }}</td>
