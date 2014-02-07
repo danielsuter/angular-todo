@@ -42,6 +42,14 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
         todo.$save();
         $scope.resetEditMode();
     }
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate', 'dd.MM.yyyy'];
+    $scope.format = $scope.formats[3];
+
+    $scope.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+    };
 }]);
 
 todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {
