@@ -18,4 +18,13 @@ public class TodoDao {
 		entityManager.persist(todo);
 		entityManager.getTransaction().commit();
 	}
+	
+	public void remove(long id) {
+		if(!entityManager.getTransaction().isActive()) {
+			entityManager.getTransaction().begin();
+		}
+		Todo todoToRemove = entityManager.find(Todo.class, id);
+		entityManager.remove(todoToRemove);
+		entityManager.getTransaction().commit();
+	}
 }

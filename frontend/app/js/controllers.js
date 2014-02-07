@@ -6,6 +6,11 @@ var todoControllers = angular.module('todoControllers', []);
 
 todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, Todo) {
     $scope.todos = Todo.query();
+
+    $scope.delete = function(todoId) {
+        Todo.remove({ id:todoId });
+        $scope.todos = Todo.query();
+    }
 }]);
 
 todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {

@@ -22,6 +22,10 @@ public class Todo {
 	private String assignee;
 	private String comment;
 
+	public Long getId() {
+		return id;
+	}
+	
 	public Calendar getDeadline() {
 		return deadline;
 	}

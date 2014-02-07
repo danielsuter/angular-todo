@@ -17,6 +17,7 @@
                 <th>Erledigt</th>
                 <th>Wer</th>
                 <th>Kommentar</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                 <td>{{ todo.done }}</td>
                 <td>{{ todo.assignee }}</td>
                 <td>{{ todo.comment }}</td>
+                <td><button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button></td>
             </tr>
 
             </tbody>
