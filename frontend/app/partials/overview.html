@@ -25,7 +25,7 @@
             <tr ng-repeat="todo in todos | filter:query">
                 <td>{{ todo.description }}</td>
                 <td>{{ todo.deadline | date: 'dd.MM.yyyy' }}</td>
-                <td>{{ todo.done }}</td>
+                <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span></td>
                 <td>{{ todo.assignee }}</td>
                 <td>{{ todo.comment }}</td>
                 <td><button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button></td>
@@ -34,4 +34,5 @@
             </tbody>
         </table>
     </div>
+
 </div>
