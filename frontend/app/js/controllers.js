@@ -16,6 +16,15 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
         todo.done = true;
         todo.$save();
     }
+
+    // TODO also check if it's done
+    $scope.isDue = function(todo) {
+        if(!todo.done) {
+            var dueDate = todo.deadline;
+            var increasedByOneDay = new Date(dueDate + (24 * 60 * 60 * 1000));
+            return new Date() > increasedByOneDay;
+        }
+    }
 }]);
 
 todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {
