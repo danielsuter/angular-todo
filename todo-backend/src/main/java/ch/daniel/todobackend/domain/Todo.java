@@ -26,6 +26,10 @@ public class Todo {
 		return id;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public Calendar getDeadline() {
 		return deadline;
 	}

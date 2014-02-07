@@ -28,7 +28,10 @@
                 <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span></td>
                 <td>{{ todo.assignee }}</td>
                 <td>{{ todo.comment }}</td>
-                <td><button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button></td>
+                <td>
+                    <button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button>
+                    <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
+                </td>
             </tr>
 
             </tbody>

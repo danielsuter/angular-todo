@@ -27,4 +27,10 @@ public class TodoDao {
 		entityManager.remove(todoToRemove);
 		entityManager.getTransaction().commit();
 	}
+	
+	public void update(Todo todo) {
+		entityManager.getTransaction().begin();
+		entityManager.merge(todo);
+		entityManager.getTransaction().commit();
+	}
 }

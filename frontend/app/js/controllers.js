@@ -11,6 +11,11 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
         Todo.remove({ id:todoId });
         $scope.todos = Todo.query();
     }
+
+    $scope.markAsDone = function(todo) {
+        todo.done = true;
+        todo.$save();
+    }
 }]);
 
 todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {
@@ -30,7 +35,6 @@ todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', fun
     $scope.setDone = function(isDone) {
         $scope.todo.done = isDone;
     };
-
 
     // Date picker
     $scope.open = function($event) {
