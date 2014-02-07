@@ -6,6 +6,7 @@ var todoControllers = angular.module('todoControllers', []);
 
 todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, Todo) {
     $scope.todos = Todo.query();
+    $scope.editedTodo = null;
 
     $scope.delete = function(todoId) {
         Todo.remove({ id:todoId });
@@ -17,13 +18,29 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
         todo.$save();
     }
 
-    // TODO also check if it's done
     $scope.isDue = function(todo) {
         if(!todo.done) {
             var dueDate = todo.deadline;
             var increasedByOneDay = new Date(dueDate + (24 * 60 * 60 * 1000));
             return new Date() > increasedByOneDay;
         }
+    }
+
+    $scope.activateEditMode = function(todoId) {
+        $scope.editedTodo = todoId;
+    }
+
+    $scope.isEditMode = function(todoId) {
+        return $scope.editedTodo === todoId;
+    }
+
+    $scope.resetEditMode = function() {
+        $scope.editedTodo = null;
+    }
+
+    $scope.save = function(todo) {
+        todo.$save();
+        $scope.resetEditMode();
     }
 }]);
 

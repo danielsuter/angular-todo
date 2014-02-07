@@ -23,14 +23,30 @@
             <tbody>
 
             <tr ng-repeat="todo in todos | filter:query" ng-class="{danger: isDue(todo)}">
-                <td>{{ todo.description }}</td>
+                <td>
+                    <span ng-show="!isEditMode(todo.id)">{{ todo.description }}</span>
+                    <input ng-show="isEditMode(todo.id)" name="description" ng-model="todo.description" type="text" class="form-control" id="description" required/>
+                </td>
                 <td>{{ todo.deadline | date: 'dd.MM.yyyy' }}</td>
                 <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span></td>
-                <td>{{ todo.assignee }}</td>
-                <td>{{ todo.comment }}</td>
                 <td>
-                    <button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button>
-                    <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
+                    <span ng-show="!isEditMode(todo.id)">{{ todo.assignee }}</span>
+                    <input ng-show="isEditMode(todo.id)" required ng-model="todo.assignee" type="text" class="form-control" id="assignee" name="assignee" />
+                </td>
+                <td>
+                    <span ng-show="!isEditMode(todo.id)">{{ todo.comment }}</span>
+                    <textarea ng-show="isEditMode(todo.id)" ng-model="todo.comment" class="form-control" id="comment"></textarea>
+                </td>
+                <td>
+                    <div ng-show="!isEditMode(todo.id)">
+                        <button ng-click="delete(todo.id)" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i> Löschen</button>
+                        <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button ng-click="activateEditMode(todo.id)" type="button" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i> Editieren</button>
+                    </div>
+                    <div ng-show="isEditMode(todo.id)">
+                        <button ng-click="save(todo)" type="button" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i> Speichern</button>
+                        <button ng-click="resetEditMode()" type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon glyphicon-remove"></i> Abbrechen</button>
+                    </div>
                 </td>
             </tr>
 
