@@ -8,6 +8,10 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
     $scope.todos = Todo.query();
     $scope.editedTodo = null;
 
+    $scope.isEmpty = function(string) {
+        return string == undefined || string == '' || string == null;
+    }
+
     $scope.delete = function(todoId) {
         Todo.remove({ id:todoId });
         $scope.todos = Todo.query();
