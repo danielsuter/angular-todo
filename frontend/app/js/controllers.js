@@ -12,9 +12,9 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
         return string == undefined || string == '' || string == null;
     }
 
-    $scope.delete = function(todoId) {
-        Todo.remove({ id:todoId });
-        $scope.todos = Todo.query();
+    $scope.delete = function(todoToRemove) {
+        Todo.remove({ id:todoToRemove.id });
+        $scope.todos.splice($scope.todos.indexOf(todoToRemove), 1);
     }
 
     $scope.markAsDone = function(todo) {
