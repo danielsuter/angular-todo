@@ -35,7 +35,8 @@
             <textarea ng-model="todo.comment" class="form-control" id="comment"></textarea>
         </div>
 
-        <button ng-disabled="form.$invalid" ng-click="addTodo()" type="button" class="btn btn-success">Hinzufügen</button>
+        <button ng-disabled="form.$invalid" ng-click="addTodoAndGotoOverview()" type="button" class="btn btn-success">Hinzufügen</button>
+        <button ng-disabled="form.$invalid" ng-click="addTodo()" type="button" class="btn btn-success">Hinzufügen und weitere</button>
         <button ng-click="cancel()" type="button" class="btn btn-danger">Abbrechen</button>
     </form>
 

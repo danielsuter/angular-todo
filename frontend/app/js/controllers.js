@@ -56,13 +56,21 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
     };
 }]);
 
-todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', function ($scope, Todo, $location) {
+todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', '$window', function ($scope, Todo, $location, $window) {
     $scope.todo = new Todo();
     $scope.todo.done = false;
 
-    $scope.addTodo = function() {
+    $window.document.getElementById('description').focus();
+
+    $scope.addTodoAndGotoOverview = function() {
         $scope.todo.$save();
         $location.path('/');
+    };
+
+    $scope.addTodo = function() {
+        $scope.todo.$save();
+        $scope.todo = new Todo();
+        $window.document.getElementById('description').focus();
     };
 
     $scope.cancel = function() {
