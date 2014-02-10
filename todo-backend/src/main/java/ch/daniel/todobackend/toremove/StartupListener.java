@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebListener;
 
 import ch.daniel.todobackend.dao.EntityManagerUtil;
 import ch.daniel.todobackend.domain.Todo;
+import ch.daniel.todobackend.domain.User;
 
 @WebListener
 public class StartupListener implements ServletContextListener {
@@ -24,12 +25,22 @@ public class StartupListener implements ServletContextListener {
 		entityManager.getTransaction().begin();
 		System.out.println("Removing all existing data");
 		entityManager.createQuery("DELETE FROM Todo").executeUpdate();
+		entityManager.createQuery("DELETE FROM User").executeUpdate();
+		
 		
 		System.out.println("Creating new sample data");
-		List<Todo> todos = new TestDataGenerator().createTodos();
-		for (Todo todo : todos) {
-			entityManager.persist(todo);
-		}
+		TestDataGenerator generator = new TestDataGenerator();
+		List<User> users = generator.createUsers();
+		persistAll(entityManager, users);
+		List<Todo> todos = generator.createTodos(users);
+		persistAll(entityManager, todos);
+		
 		entityManager.getTransaction().commit();
+	}
+	
+	private void persistAll(EntityManager entityManager, Iterable<? extends Object> toPerist) {
+		for (Object object : toPerist) {
+			entityManager.persist(object);
+		}
 	}
 }

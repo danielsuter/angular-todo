@@ -18,3 +18,10 @@ angularTodoServices.factory('Todo', ['$resource',
         'remove': {method:'DELETE'}
       });
     }]);
+
+angularTodoServices.factory('User', ['$resource',
+    function($resource) {
+        return $resource('/todo-backend/rest/user/:id', {}, {
+            query: {method: 'GET', isArray: true}
+        });
+    }]);

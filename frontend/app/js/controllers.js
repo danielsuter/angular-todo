@@ -4,8 +4,9 @@
 
 var todoControllers = angular.module('todoControllers', []);
 
-todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, Todo) {
+todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', 'User', function ($scope, Todo, User) {
     $scope.todos = Todo.query();
+    $scope.users = User.query();
     $scope.editedTodo = null;
 
     $scope.isEmpty = function(string) {
@@ -56,9 +57,10 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', function ($scope, 
     };
 }]);
 
-todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', '$window', function ($scope, Todo, $location, $window) {
+todoControllers.controller('TodoDetailCtrl', ['$scope', 'Todo', '$location', '$window', 'User', function ($scope, Todo, $location, $window, User) {
     $scope.todo = new Todo();
     $scope.todo.done = false;
+    $scope.users = User.query();
 
     $window.document.getElementById('description').focus();
 

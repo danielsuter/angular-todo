@@ -26,7 +26,8 @@
 
         <div class="form-group has-feedback" ng-class="{ 'has-success': form.assignee.$valid, 'has-error': form.assignee.$invalid }">
             <label class="control-label" for="assignee">Wer</label>
-            <input required ng-model="todo.assignee" type="text" class="form-control" id="assignee" name="assignee" />
+            <select id="assignee" name="assignee" ng-model="todo.assignee" class="form-control" required ng-options="user.name for user in users">
+            </select>
             <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.assignee.$valid, 'glyphicon-remove': form.assignee.$invalid }" />
         </div>
 

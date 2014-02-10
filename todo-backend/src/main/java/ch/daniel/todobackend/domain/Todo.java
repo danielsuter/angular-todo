@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +20,8 @@ public class Todo {
 	@Temporal(TemporalType.DATE)
 	private Calendar deadline;
 	private boolean isDone;
-	private String assignee;
+	@ManyToOne
+	private User assignee;
 	private String comment;
 
 	public Long getId() {
@@ -46,14 +48,6 @@ public class Todo {
 		this.isDone = isDone;
 	}
 
-	public String getAssignee() {
-		return assignee;
-	}
-
-	public void setAssignee(String assignee) {
-		this.assignee = assignee;
-	}
-
 	public String getComment() {
 		return comment;
 	}
@@ -74,7 +68,15 @@ public class Todo {
 	public String toString() {
 		return "Todo [id=" + id + ", description=" + description
 				+ ", deadline=" + deadline + ", isDone=" + isDone
-				+ ", assignee=" + assignee + ", comment=" + comment + "]";
+				+ ", assignee=" + getAssignee() + ", comment=" + comment + "]";
+	}
+
+	public User getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(User assignee) {
+		this.assignee = assignee;
 	}
 	
 }

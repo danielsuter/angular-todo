@@ -79,10 +79,11 @@
                         <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span>
                         </td>
                         <td>
-                            <span ng-show="!isEditMode(todo.id)">{{ todo.assignee }}</span>
+                            <span ng-show="!isEditMode(todo.id)">{{ todo.assignee.name }}</span>
                             <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.assignee), 'has-error': isEmpty(todo.assignee) }">
-                                <input ng-show="isEditMode(todo.id)" required ng-model="todo.assignee" type="text"
-                                       class="form-control" id="assignee" name="assignee"/>
+
+                                <select ng-show="isEditMode(todo.id)" id="assignee" name="assignee" ng-model="todo.assignee" required ng-options="user.name for user in users">
+                                </select>
                             </div>
                         </td>
                         <td>
