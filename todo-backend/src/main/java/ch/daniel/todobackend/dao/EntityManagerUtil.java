@@ -6,13 +6,14 @@ import javax.persistence.Persistence;
 
 public class EntityManagerUtil {
 	
-	private static EntityManager entityManager = null;
+	private final static EntityManagerFactory factory = Persistence.createEntityManagerFactory("todoUnit");;
+	private static ThreadLocal<EntityManager> entityManager = new ThreadLocal<>();
+	
 	
 	public synchronized static EntityManager get() {
-		if(entityManager == null) {
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("todoUnit");
-			entityManager = emf.createEntityManager();
+		if(entityManager.get() == null) {
+			entityManager.set(factory.createEntityManager());
 		}
-		return entityManager;
+		return entityManager.get();
 	}
 }
