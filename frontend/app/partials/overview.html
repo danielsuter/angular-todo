@@ -3,91 +3,117 @@
         <a href="#add-todo" class="btn btn-success"><i class="glyphicon glyphicon-plus-sign"></i> Hinzufügen</a>
     </div>
 
-    <div class="form-group">
-        <label for="todoFilter">Filter:</label>
-        <input ng-model="query" type="text" class="form-control" id="todoFilter" placeholder="Filter eingeben"/>
+    <div class="row-fluid">
+        <div class="panel panel-default">
+            <div class="form-group panel-body">
+                <div class="col-md-3">
+                    <label for="globalFilter">Filter:</label>
+                    <input ng-model="query" type="text" class="form-control" id="globalFilter" placeholder="Filter eingeben"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="assigneeFilter">Wer:</label>
+                    <input ng-model="queryAssignee" type="text" class="form-control" id="assigneeFilter" placeholder="Wer..."/>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Erledigt:</label><br/>
+                    <div class="btn-group">
+                        <button ng-model="queryDone" ng-click="queryDone=''" type="button" class="btn btn-default" ng-class="{active: queryDone === ''}">Alle</button>
+                        <button ng-model="queryDone" ng-click="queryDone=true" type="button" class="btn btn-default" ng-class="{active: queryDone}">Ja</button>
+                        <button ng-model="queryDone" ng-click="queryDone=false" type="button" class="btn btn-default" ng-class="{active: queryDone === false}">Nein</button>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <br/>
+                    <button ng-click="queryDone=''; query=''; queryAssignee=''" type="button" class="form-control btn btn-warning">Reset</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="table-responsive">
-        <form name="quickEditForm" novalidate>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Beschreibung</th>
-                    <th>Deadline</th>
-                    <th>Erledigt</th>
-                    <th>Wer</th>
-                    <th>Kommentar</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="todo in todos | filter:query" ng-class="{danger: isDue(todo)}">
-                    <td>
-                        <span ng-show="!isEditMode(todo.id)">{{ todo.description }}</span>
-                        <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.description), 'has-error': isEmpty(todo.description) }">
-                            <input ng-show="isEditMode(todo.id)" name="description" ng-model="todo.description" type="text"
-                                   class="form-control" id="description-{{todo.id}}" required/>
-                        </div>
-                    </td>
-                    <td>
-                        <span ng-show="!isEditMode(todo.id)">{{ todo.deadline | date: 'dd.MM.yyyy' }}</span>
+    <div class="row-fluid">
+        <div class="table-responsive">
+            <form name="quickEditForm" novalidate>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Beschreibung</th>
+                        <th>Deadline</th>
+                        <th>Erledigt</th>
+                        <th>Wer</th>
+                        <th>Kommentar</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="todo in todos | filter:query | filter:{assignee:queryAssignee} | filter:queryDone" ng-class="{danger: isDue(todo)}">
+                        <td>
+                            <span ng-show="!isEditMode(todo.id)">{{ todo.description }}</span>
+                            <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.description), 'has-error': isEmpty(todo.description) }">
+                                <input ng-show="isEditMode(todo.id)" name="description" ng-model="todo.description" type="text"
+                                       class="form-control" id="description-{{todo.id}}" required/>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-show="!isEditMode(todo.id)">{{ todo.deadline | date: 'dd.MM.yyyy' }}</span>
 
-                        <div ng-show="isEditMode(todo.id)" class="input-group">
-                            <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.deadline), 'has-error': isEmpty(todo.deadline) }">
-                                <input name="deadline" id="deadline" type="text" class="form-control"
-                                       ng-model="todo.deadline"
-                                       datepicker-popup="{{format}}" is-open="opened"
-                                       min="minDate" max="'2015-06-22'"
-                                       datepicker-options="dateOptions"
-                                       date-disabled="disabled(date, mode)"
-                                       ng-required="true"
-                                       close-text="Schliessen"/>
-                              <span class="input-group-btn">
-                                <button class="btn btn-default" ng-click="open($event)"><i
-                                        class="glyphicon glyphicon-calendar"></i></button>
-                              </span>
-                          </div>
-                        </div>
-                    </td>
-                    <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span>
-                    </td>
-                    <td>
-                        <span ng-show="!isEditMode(todo.id)">{{ todo.assignee }}</span>
-                        <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.assignee), 'has-error': isEmpty(todo.assignee) }">
-                            <input ng-show="isEditMode(todo.id)" required ng-model="todo.assignee" type="text"
-                                   class="form-control" id="assignee" name="assignee"/>
-                        </div>
-                    </td>
-                    <td>
-                        <span ng-show="!isEditMode(todo.id)">{{ todo.comment }}</span>
-                        <textarea ng-show="isEditMode(todo.id)" ng-model="todo.comment" class="form-control"
-                                  id="comment"></textarea>
-                    </td>
-                    <td>
-                        <div ng-show="!isEditMode(todo.id)">
-                            <button ng-click="delete(todo)" type="button" class="btn btn-danger btn-xs">
-                                <i class="glyphicon glyphicon-minus"></i> Löschen
-                            </button>
-                            <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button"
-                                    class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button ng-click="activateEditMode(todo.id)" type="button" class="btn btn-warning btn-xs">
-                                <i class="glyphicon glyphicon-edit"></i> Editieren
-                            </button>
-                        </div>
-                        <div ng-show="isEditMode(todo.id)">
-                            <button ng-click="save(todo)" type="button" class="btn btn-success btn-xs"  ng-disabled="quickEditForm.$invalid">
-                                <i class="glyphicon glyphicon-ok"></i> Speichern
-                            </button>
-                            <button ng-click="resetEditMode()" type="button" class="btn btn-danger btn-xs">
-                                <i class="glyphicon glyphicon glyphicon-remove"></i> Abbrechen
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+                            <div ng-show="isEditMode(todo.id)" class="input-group">
+                                <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.deadline), 'has-error': isEmpty(todo.deadline) }">
+                                    <input name="deadline" id="deadline" type="text" class="form-control"
+                                           ng-model="todo.deadline"
+                                           datepicker-popup="{{format}}" is-open="opened"
+                                           min="minDate" max="'2015-06-22'"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           ng-required="true"
+                                           close-text="Schliessen"/>
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="open($event)"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                              </div>
+                            </div>
+                        </td>
+                        <td><span class="label" ng-class="{ 'label-danger': !todo.done, 'label-success': todo.done }">{{ todo.done | ja_nein }}</span>
+                        </td>
+                        <td>
+                            <span ng-show="!isEditMode(todo.id)">{{ todo.assignee }}</span>
+                            <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.assignee), 'has-error': isEmpty(todo.assignee) }">
+                                <input ng-show="isEditMode(todo.id)" required ng-model="todo.assignee" type="text"
+                                       class="form-control" id="assignee" name="assignee"/>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-show="!isEditMode(todo.id)">{{ todo.comment }}</span>
+                            <textarea ng-show="isEditMode(todo.id)" ng-model="todo.comment" class="form-control"
+                                      id="comment"></textarea>
+                        </td>
+                        <td>
+                            <div ng-show="!isEditMode(todo.id)">
+                                <button ng-click="delete(todo)" type="button" class="btn btn-danger btn-xs">
+                                    <i class="glyphicon glyphicon-minus"></i> Löschen
+                                </button>
+                                <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button"
+                                        class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button ng-click="activateEditMode(todo.id)" type="button" class="btn btn-warning btn-xs">
+                                    <i class="glyphicon glyphicon-edit"></i> Editieren
+                                </button>
+                            </div>
+                            <div ng-show="isEditMode(todo.id)">
+                                <button ng-click="save(todo)" type="button" class="btn btn-success btn-xs"  ng-disabled="quickEditForm.$invalid">
+                                    <i class="glyphicon glyphicon-ok"></i> Speichern
+                                </button>
+                                <button ng-click="resetEditMode()" type="button" class="btn btn-danger btn-xs">
+                                    <i class="glyphicon glyphicon glyphicon-remove"></i> Abbrechen
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
-
 </div>
