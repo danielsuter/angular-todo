@@ -43,7 +43,29 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', 'User', function (
         $scope.editedTodo = null;
     }
 
+    // Workaround for select
+    function fixUserReference(todo) {
+        var index;
+        for (index = 0; index < $scope.users.length; ++index) {
+            var user = $scope.users[index];
+            if(todo.assignee.name === user.name) {
+                todo.assignee = user;
+                console.log('fixed reference');
+            }
+        }
+    }
+
+    // Workaround, since date-picker fails to preserve value
+    function fixDeadlineDate(todo) {
+        if(!isNaN(todo.deadline)) {
+            todo.deadline = new Date(todo.deadline);
+        }
+    }
+
     $scope.save = function(todo) {
+        fixUserReference(todo);
+        fixDeadlineDate(todo);
+
         todo.$save();
         $scope.resetEditMode();
     }

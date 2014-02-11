@@ -61,7 +61,7 @@
 
                             <div ng-show="isEditMode(todo.id)" class="input-group">
                                 <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.deadline), 'has-error': isEmpty(todo.deadline) }">
-                                    <input name="deadline" id="deadline" type="text" class="form-control"
+                                    <input name="deadline" id="deadline-{{todo.id}}" type="text" class="form-control"
                                            ng-model="todo.deadline"
                                            datepicker-popup="{{format}}" is-open="opened"
                                            min="minDate" max="'2015-06-22'"
@@ -82,14 +82,13 @@
                             <span ng-show="!isEditMode(todo.id)">{{ todo.assignee.name }}</span>
                             <div class="form-group has-feedback" ng-class="{ 'has-success': !isEmpty(todo.assignee), 'has-error': isEmpty(todo.assignee) }">
 
-                                <select ng-show="isEditMode(todo.id)" id="assignee" name="assignee" ng-model="todo.assignee" required ng-options="user.name for user in users">
+                                <select ng-show="isEditMode(todo.id)" name="assignee" ng-model="todo.assignee.name" required ng-options="user.name as user.name for user in users">
                                 </select>
                             </div>
                         </td>
                         <td>
                             <span ng-show="!isEditMode(todo.id)">{{ todo.comment }}</span>
-                            <textarea ng-show="isEditMode(todo.id)" ng-model="todo.comment" class="form-control"
-                                      id="comment"></textarea>
+                            <textarea ng-show="isEditMode(todo.id)" ng-model="todo.comment" class="form-control"></textarea>
                         </td>
                         <td>
                             <div ng-show="!isEditMode(todo.id)">
