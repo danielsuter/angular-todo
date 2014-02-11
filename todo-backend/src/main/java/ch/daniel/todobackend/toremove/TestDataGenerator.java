@@ -25,8 +25,8 @@ public class TestDataGenerator {
 	public List<User> createUsers() {
 		List<User> users = new LinkedList<User>();
 		users.add(new User("Daniel", "suter_daniel@hotmail.com"));
-		users.add(new User("Ilija", "ilija.letic@gmail.com"));
-		users.add(new User("Nadja", "nadja.walti@hotmail.com"));
+		users.add(new User("Ilija", "suter_daniel@hotmail.com"));
+		users.add(new User("Nadja", "suter_daniel@hotmail.com"));
 		return users;
 	}
 }

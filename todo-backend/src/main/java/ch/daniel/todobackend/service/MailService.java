@@ -9,6 +9,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import ch.daniel.todobackend.dao.ApplicationProperties;
+
 @Stateless
 public class MailService {
 	private static final String FROM = "info@shinseikan.ch";
@@ -23,7 +25,12 @@ public class MailService {
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText(message);
-			Transport.send(mimeMessage);
+			
+			if(ApplicationProperties.isTestMode()) {
+				System.out.println(message + "\n --> to " + to);
+			} else {
+				Transport.send(mimeMessage);
+			}
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

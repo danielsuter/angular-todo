@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import ch.daniel.todobackend.service.MailService;
+import ch.daniel.todobackend.service.NotifyService;
 
 @Path("test")
 public class TestResource {
@@ -14,9 +15,12 @@ public class TestResource {
 	@EJB
 	private MailService mailService;
 	
+	@EJB
+	private NotifyService notifyService;
+	
 	@GET
 	public Response get() {
-		mailService.send("suter_daniel@hotmail.com", "Test, ob Shinseikan funktioniert", "Funktioniert es?");
+		notifyService.sendMails();
 		return Response.status(Status.OK).build();
 	}
 }
