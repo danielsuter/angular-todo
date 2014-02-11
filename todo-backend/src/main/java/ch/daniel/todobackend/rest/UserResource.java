@@ -2,6 +2,7 @@ package ch.daniel.todobackend.rest;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +14,8 @@ import ch.daniel.todobackend.domain.User;
 
 @Path("user")
 public class UserResource {
-	private UserDao userDao = new UserDao();
+	@EJB
+	private UserDao userDao;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

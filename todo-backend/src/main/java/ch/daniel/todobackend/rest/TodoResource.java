@@ -3,6 +3,7 @@ package ch.daniel.todobackend.rest;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +21,8 @@ import ch.daniel.todobackend.domain.Todo;
 @Path("todo")
 public class TodoResource {
 	
-	private TodoDao todoDao = new TodoDao();
+	@EJB
+	private TodoDao todoDao;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

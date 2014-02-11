@@ -2,34 +2,31 @@ package ch.daniel.todobackend.dao;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import ch.daniel.todobackend.domain.Todo;
 
+@Stateless
 public class TodoDao {
-	private EntityManager entityManager = EntityManagerUtil.get();
+	@PersistenceContext(unitName="todoUnit")
+	private EntityManager entityManager;
 
 	public List<Todo> get() {
-		return entityManager.createQuery("SELECT t FROM Todo t", Todo.class)
-				.getResultList();
+		return entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
 	}
 
 	public void persist(Todo todo) {
-		entityManager.getTransaction().begin();
 		entityManager.persist(todo);
-		entityManager.getTransaction().commit();
 	}
 
 	public void remove(long id) {
-		entityManager.getTransaction().begin();
 		Todo todoToRemove = entityManager.find(Todo.class, id);
 		entityManager.remove(todoToRemove);
-		entityManager.getTransaction().commit();
 	}
 
 	public void update(Todo todo) {
-		entityManager.getTransaction().begin();
 		entityManager.merge(todo);
-		entityManager.getTransaction().commit();
 	}
 }
