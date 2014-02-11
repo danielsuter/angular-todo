@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.daniel</groupId>
-	<artifactId>todo-backend</artifactId>
+	<artifactId>angular-todo</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>todo-backend Maven Webapp</name>
+	<name>AngularJS Todo Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<repositories>
@@ -67,6 +67,30 @@
 
 	</dependencies>
 	<build>
-		<finalName>todo-backend</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>../frontend/app</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<finalName>angular-todo</finalName>
 	</build>
 </project>
