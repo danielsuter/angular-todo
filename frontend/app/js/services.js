@@ -12,7 +12,7 @@ var angularTodoServices = angular.module('angularTodoServices', ['ngResource']);
 
 angularTodoServices.factory('Todo', ['$resource',
     function($resource) {
-      return $resource('/todo-backend/rest/todo/:id', {}, {
+      return $resource('/angular-todo/rest/todo/:id', {}, {
         query: {method: 'GET', isArray: true},
         save:   {method:'POST'},
         'remove': {method:'DELETE'}
@@ -21,7 +21,7 @@ angularTodoServices.factory('Todo', ['$resource',
 
 angularTodoServices.factory('User', ['$resource',
     function($resource) {
-        return $resource('/todo-backend/rest/user/:id', {}, {
+        return $resource('/angular-todo/rest/user/:id', {}, {
             query: {method: 'GET', isArray: true}
         });
     }]);

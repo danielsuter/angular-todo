@@ -89,6 +89,30 @@
 					</webResources>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.glassfish.maven.plugin</groupId>
+				<artifactId>maven-glassfish-plugin</artifactId>
+				<configuration>
+					<terse>false</terse>
+					<echo>true</echo>
+					<debug>true</debug>
+					<glassfishDirectory>/opt/glassfish/glassfish</glassfishDirectory>
+					<user>admin</user>
+					<passwordFile>/opt/glassfish/glassfish/domains/domain1/config/admin-keyfile</passwordFile>
+					<domain>
+						<name>domain1</name>
+						<host>localhost</host>
+						<adminPort>4848</adminPort>
+					</domain>
+					<components>
+						<component>
+							<name>${project.artifactId}</name>
+							<artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
+						</component>
+					</components>
+				</configuration>
+			</plugin>
 		</plugins>
 
 		<finalName>angular-todo</finalName>
