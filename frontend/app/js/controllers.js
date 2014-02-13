@@ -20,6 +20,13 @@ todoControllers.controller('TodoListCtrl', ['$scope', 'Todo', 'User', function (
 
     $scope.markAsDone = function(todo) {
         todo.done = true;
+        fixDeadlineDate(todo);
+        todo.$save();
+    }
+
+    $scope.markAsUndone = function(todo) {
+        todo.done = false;
+        fixDeadlineDate(todo);
         todo.$save();
     }
 

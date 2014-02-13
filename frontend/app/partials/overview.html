@@ -97,6 +97,8 @@
                                 </button>
                                 <button ng-show="!todo.done" ng-click="markAsDone(todo)" type="button"
                                         class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button ng-show="todo.done" ng-click="markAsUndone(todo)" type="button"
+                                        class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-ok"></i></button>
                                 <button ng-click="activateEditMode(todo.id)" type="button" class="btn btn-warning btn-xs">
                                     <i class="glyphicon glyphicon-edit"></i> Editieren
                                 </button>
