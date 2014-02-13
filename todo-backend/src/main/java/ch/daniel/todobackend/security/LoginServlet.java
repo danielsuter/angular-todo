@@ -42,11 +42,15 @@ public class LoginServlet extends HttpServlet {
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		
-		HttpSession session = request.getSession(true);
-		session.setAttribute("authenticated", true);
-		
-		String requestUrl = (String) session.getAttribute("requestUrl");
-		response.sendRedirect(requestUrl);
+		if(userDao.isValidCredentials(user, password)) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("authenticated", true);
+			String requestUrl = (String) session.getAttribute("requestUrl");
+			response.sendRedirect(requestUrl);
+		} else {
+			String loginPage = request.getContextPath() + "/login.html";
+			response.sendRedirect(loginPage);
+		}
 	}
 
 }
